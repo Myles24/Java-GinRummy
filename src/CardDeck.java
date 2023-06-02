@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 public class CardDeck {
-    // instantiates variables such as the number of current cards and the discard pile list - Cole
+    // instantiates variables such as the number of current cards and the discard pile list
     public static int currentCards = 52;
     public static ArrayList<String> discardPile = new ArrayList<String>();
     public static final String[][] deckOrder = new String[19][10];
 
-    // lists that dictate which cards are worth a certain point value for scoring - Cole
+    // lists that dictate which cards are worth a certain point value for scoring
     public static final String[] fivePoints = {"A","2","3","4","5","6","7","8","9"};
     public static final String[] tenPoints = {"T","J","Q","K"};
 
 
-    // 2D array deck of cards that is modified throughout the game - Cole
+    // 2D array deck of cards that is modified throughout the game
     private static String[][] deck = {  {"AH","AD","AC","AS"},
                                         {"2H","2D","2C","2S"},
                                         {"3H","3D","3C","3S"},
@@ -30,7 +30,7 @@ public class CardDeck {
         pX.setHand(generateCard());
     }
 
-    // returns a random card from the deck and sets that index to null - Cole
+    // returns a random card from the deck and sets that index to null
     public static String generateCard(){
         int cardRow = (int) (Math.random()*13);
         int cardCol = (int) (Math.random()*4);
@@ -44,7 +44,7 @@ public class CardDeck {
         return card;
     }
 
-    // creates ordered, unmodified deck of cards with padding to avoid index exceptions - Cole
+    // creates ordered, unmodified deck of cards with padding to avoid index exceptions
     public static void createFullDeck(){
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 10; j++){

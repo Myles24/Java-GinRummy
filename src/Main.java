@@ -2,14 +2,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    // sets up the Player objects and other instance variables - Carson
+    // sets up the Player objects and other instance variables
     private static boolean turn = true;
     private static PlayerHand p1;
     private static PlayerHand p2;
     private static boolean turn1 = true;
     private static int numPlayer;
 
-    // sets up game by initializing player variables and creates the deck - Carson
+    // sets up game by initializing player variables and creates the deck
     public static void setUpGame(){
         CardDeck.createFullDeck();
         p1 = new PlayerHand();
@@ -17,7 +17,7 @@ public class Main {
         CardDeck.discardPile.add(CardDeck.generateCard());
         turn1 = false;
     }
-    // determines who's turn it is and checks if the game is over - Carson
+    // determines who's turn it is and checks if the game is over
     public static void main(String[] args){
         setUpGame();
         while (true) {
@@ -33,13 +33,13 @@ public class Main {
                 play(p2);
                 System.out.print("\n\n\n");
             }
-            if (CardDeck.currentCards <= 0 || p1.getHand().size()==0 || p2.getHand().size()==0){
+            if (CardDeck.currentCards <= 0){
                 System.out.println(winConditions());
                 System.exit(0);
             }
         }
     }
-    // method that simulates the play of the game and player interaction - Carson
+    // method that simulates the play of the game and player interaction
     public static void play(PlayerHand player){
         Scanner sc = new Scanner(System.in);
         for (int i = 0; i < player.getHand().size(); i++){
@@ -65,7 +65,7 @@ public class Main {
         turn = !turn;
     }
 
-    // algorithm that pairs cards in hand by suit or rank - Carson
+    // algorithm that pairs cards in hand by suit or rank
     public static ArrayList<String> pairings(int index, PlayerHand player){
         Scanner sc = new Scanner(System.in);
         ArrayList<String> suitPairs = new ArrayList<String>();
@@ -118,7 +118,7 @@ public class Main {
         return new ArrayList<String>();
     }
 
-    // removes any cards from hand that have already been paired - Carson
+    // removes any cards from hand that have already been paired
     public static void removePairs(ArrayList<String> arr, PlayerHand pX){
         for (String card : arr){
             for (int i = 0; i < pX.getHand().size(); i++){
@@ -130,7 +130,7 @@ public class Main {
         }
     }
 
-    // shifts cards from discard pile into hand and implements pairing method - Carson
+    // shifts cards from discard pile into hand and implements pairing method
     public static void pickFromDiscard(int index, PlayerHand pX){
         String card = CardDeck.discardPile.get(index);
         int tempIndex = pX.getHand().size();
@@ -145,9 +145,13 @@ public class Main {
 
     }
 
-    // shifts card from a player's hand into the discard pile - Carson
+    // shifts card from a player's hand into the discard pile
     public static void discardCard(PlayerHand player){
         Scanner sc = new Scanner(System.in);
+        if (p1.getHand().size()==0 || p2.getHand().size()==0){
+            System.out.println(winConditions());
+            System.exit(0);
+        }
         System.out.print("What index of card would you like to discard? ");
         int dis = sc.nextInt();
         CardDeck.discardPile.add(player.returnCard(dis));
@@ -155,7 +159,7 @@ public class Main {
         System.out.println("Your hand: " + player.getHand() + "  " + "Discard Pile: "+CardDeck.discardPile+"  Your pairs: "+player.getPairs());
     }
 
-    // determines who wins based on a point system of their pairings - Carson
+    // determines who wins based on a point system of their pairings
     public static String winConditions(){
         PlayerHand[] players = {p1, p2};
         for (PlayerHand player : players) {  // Adds to each player's score each card's point value in their pairs
@@ -173,21 +177,20 @@ public class Main {
                     }
                 }
             }
-        }
-        for (PlayerHand player : players){ // Subtracts the point value of each card left in each player's hand from their score
-            for (String card : player.getHand()){
-                for (String fP : CardDeck.fivePoints){
-                    if (card.substring(0,1).equals(fP)){
+            for (String str : player.getHand()) {
+                for (String fP : CardDeck.fivePoints) {
+                    if (str.substring(0, 1).equals(fP)) {
                         player.setPoints(-5);
                     }
                 }
-                for (String tP : CardDeck.fivePoints){
-                    if (card.substring(0,1).equals(tP)){
+                for (String tP : CardDeck.tenPoints) {
+                    if (str.substring(0, 1).equals(tP)) {
                         player.setPoints(-10);
                     }
                 }
             }
         }
+
 
         if (p1.getPoints() > p2.getPoints()){
             return "Player 1 is the winner! P1 points: "+p1.getPoints()+" P2 Points: "+p2.getPoints();

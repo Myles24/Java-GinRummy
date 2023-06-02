@@ -3,19 +3,19 @@ import java.util.ArrayList;
 public class PlayerHand {
     private ArrayList<String> hand = new ArrayList<String>();
     private ArrayList<ArrayList<String>> pairs = new ArrayList<ArrayList<String>>();
-    private int temp = 0;
-    private int points = 0;
+    private int points;
 
-    // creates the hand size with 7 cards - Cole
+    // creates the hand size with 7 cards
     public PlayerHand(){
         for (int i = 0; i < 7; i++){
             hand.add(CardDeck.generateCard());
         }
+        points = 0;
     }
 
 
 
-    // adds an ArrayList of cards to the pairs list - Cole
+    // adds an ArrayList of cards to the pairs list
     public void addPairs(ArrayList<String> arr){
         pairs.add(arr);
         for (int i = 0; i < pairs.size(); i++){
@@ -26,7 +26,7 @@ public class PlayerHand {
         }
     }
 
-    // other getters and setters for the hand or pairs list - Cole
+    // other getters and setters for the hand or pairs list
     public ArrayList<String> getHand(){
         return hand;
     }
